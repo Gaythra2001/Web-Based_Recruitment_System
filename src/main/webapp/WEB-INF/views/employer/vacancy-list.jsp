@@ -102,12 +102,10 @@
 
                                             <li><hr class="dropdown-divider"></li>
                                             <li>
-                                                <form action="${pageContext.request.contextPath}/employer/vacancies/delete" method="post" onsubmit="return confirm('Are you sure you want to delete this vacancy? All related applications will be deleted.');">
-                                                    <input type="hidden" name="vacancyId" value="${v.vacancyId}">
-                                                    <button type="submit" class="dropdown-item text-danger">
-                                                        <i class="bi bi-trash me-2"></i> Delete Vacancy
-                                                    </button>
-                                                </form>
+                                                <button type="button" class="dropdown-item text-danger"
+                                                        onclick="deleteVacancy('${v.vacancyId}')">
+                                                    <i class="bi bi-trash me-2"></i> Delete Vacancy
+                                                </button>
                                             </li>
                                         </ul>
                                     </div>
@@ -133,5 +131,22 @@
         </table>
     </div>
 </div>
+
+<script>
+function deleteVacancy(vacancyId) {
+    if (confirm('Are you sure you want to delete this vacancy? All related applications will also be deleted.')) {
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '${pageContext.request.contextPath}/employer/vacancies/delete';
+        var input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'vacancyId';
+        input.value = vacancyId;
+        form.appendChild(input);
+        document.body.appendChild(form);
+        form.submit();
+    }
+}
+</script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
